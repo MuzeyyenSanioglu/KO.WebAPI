@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model IEnumerable<ProductListViewModel>
+@inject SignInManager<User> SingInManager
+@{
+    ViewData["Title"] = "Product List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (SingInManager.IsSignedIn(User))
+{
+    <h4>Ürün Listesi</h4>
+    <hr />
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Ürün Listesi</h3>
+                </div>
+                @if (User.IsInRole("Admin") || User.IsInRole("SysAdmin"))
+                {
+                    <div class= "col-md-11" style = "margin-top : 10px;">
+                     <input type="submit" value="Ürün ekle" class="btn btn-primary" /></div>
+                }
+                <div class="card-body">
+                    <table id="example1" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ürün Adı:</th>
+                                <th>Marka</th>
+                                <th>Fiyat</th>
+                                <th>Özellik</th>
+                                <th>Indirim</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.BrandName</td>
+                                    <td>@item.Price</td>
+                                    <td>@item.ProductFeature</td>
+                                    <td>@item.DiscountAmount</td>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("SysAdmin"))
+                                    {
+                                        <td> <input type="submit" value="Düzenle" class="btn btn-primary" /></td>
+                                    }
+                                    <td> <input type="submit" value="Sepete ekle" class="btn btn-primary" /></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+else
+{
+    <h4>Login olmanız gerekiyor.</h4>
+}

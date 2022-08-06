@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  userapi.webapp:
+    image: ${DOCKER_REGISTRY-}userapiwebapp
+    build:
+      context: .
+      dockerfile: UserAPI.WebApp/Dockerfile
+  
+  WepApiSqldb:
+    image: mcr.microsoft.com/mssql/server
